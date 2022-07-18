@@ -13,6 +13,12 @@ class BlogCategory(models.Model):
 
 
 class Article(models.Model):
+    category = models.ForeignKey(
+        to=BlogCategory,
+        verbose_name='Категория',
+        on_delete=models.SET_NULL,
+        null=True
+    )
     title = models.CharField(verbose_name='Заголовок', max_length=255)
     text_preview = models.TextField(verbose_name='Текст-превью')
     text = models.TextField(verbose_name='Текст')
