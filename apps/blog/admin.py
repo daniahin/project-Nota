@@ -1,3 +1,6 @@
 from django.contrib import admin
+from apps.blog.models import Article, BlogCategory
 
-# Register your models here.
+admin.site.register(Article)
+admin.site.register(BlogCategory)
+
