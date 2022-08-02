@@ -8,10 +8,12 @@
                 {% if article.image %}
                     <img class="img-thumbnail" src="{{ article.image_thumbnail.url }}" alt="">
                 {% else %}
-                    <img class="img-thumbnail" src="{% static 'no-image.png' %}" alt="">
+                    <a href="">
+                        <img class="img-thumbnail" src="{% static 'no-image.png' %}" alt="">6
+                    </a>
                 {% endif %}
                 <h4>
-                    <a href="{% url 'tag_search_article_list' tag_id=tag.id %}">#{{ tag.name }}</a>
+                    <a href="{% url 'article_view' article_id=article.id category_id=article.category.id %}">{{ article.title }}</a>
                 </h4>
                 <p4>{{ article.text_preview }}</p4>
                 <hr>

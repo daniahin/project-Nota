@@ -1,5 +1,5 @@
 from django.db import models
-from imagekit.model import ProcessedImageField, ImageSpecFiel
+from imagekit.models import ProcessedImageField, ImageSpecField
 from pilkit.processors import ResizeToFill
 
 
@@ -7,7 +7,7 @@ class BlogCategory(models.Model):
     name = models.CharField(verbose_name='Назва', max_length=256)
     # image = models.ImageField(verbose_name='Зображення', upload_to='blog/category', null=True)
     image = ProcessedImageField(
-        verbose_mame='Зображение',
+        verbose_name='Зображення',
         upload_to='blog/category',
         processors=[ResizeToFill(600, 400)],
         format='JPEG',
@@ -19,8 +19,8 @@ class BlogCategory(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Категория блога'
-        verbose_name_plural = 'Категории блога'
+        verbose_name = 'Категорія блога'
+        verbose_name_plural = 'Категорії блога'
 
 class Tag(models.Model):
     name = models.CharField(verbose_name='Название', max_length=256)
@@ -35,13 +35,13 @@ class Tag(models.Model):
 class Article(models.Model):
     category = models.ForeignKey(
         to=BlogCategory,
-        verbose_name='Категория',
+        verbose_name='Категорія',
         on_delete=models.SET_NULL,
         null=True
     )
     tags = models.ManyToManyField(to=Tag, verbose_name='Тэги', blank=True)
     image = ProcessedImageField(
-        verbose_mame='Зображение',
+        verbose_name='Зображеня',
         upload_to='blog/article',
         processors=[],
         format='JPEG',
@@ -57,12 +57,12 @@ class Article(models.Model):
     title = models.CharField(verbose_name='Заголовок', max_length=255)
     text_preview = models.TextField(verbose_name='Текст-превью')
     text = models.TextField(verbose_name='Текст')
-    created_at = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
-    updated_at = models.DateTimeField(verbose_name='Дата создания', auto_now=True)
+    created_at = models.DateTimeField(verbose_name='Дата створення', auto_now_add=True)
+    updated_at = models.DateTimeField(verbose_name='Дата обнови', auto_now=True)
 
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name = 'Статья'
-        verbose_name_plural = 'Статьи'
+        verbose_name = 'Стаття'
+        verbose_name_plural = 'Статті'
