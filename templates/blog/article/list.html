@@ -1,25 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <h1>Статьи</h1>
+    <h1>Статті</h1>
     <div class="row">
         {% for article in articles %}
             <div class="col-4 blog-item">
                 {% if article.image %}
                     <img class="img-thumbnail" src="{{ article.image_thumbnail.url }}" alt="">
                 {% else %}
-                    <a href="">
-                        <img class="img-thumbnail" src="{% static 'no-image.png' %}" alt="">6
-                    </a>
+                    <img class="img-thumbnail" src="{% static 'no-image.png' %}" alt="">
                 {% endif %}
                 <h4>
                     <a href="{% url 'article_view' article_id=article.id category_id=article.category.id %}">{{ article.title }}</a>
                 </h4>
-                <p4>{{ article.text_preview }}</p4>
+                <p>{{ article.text_preview }}</p>
                 <hr>
-                <p class="text-end"
-                {{ article.created_at }}
-                </p>
+                <p class="text-end"><i>{{ article.created_at }}</i></p>
             </div>
         {% endfor %}
     </div>

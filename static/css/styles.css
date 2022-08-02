@@ -1,23 +1,22 @@
 #logo{
-    max-width: 30%;
+    max-width: 300px;
 }
 .blog-item{
     margin-bottom: 30px;
 }
 .blog-item h4{
     text-align: center;
-    position: relative;
 }
 .blog-item h4 a{
-    text-decoration: none
+    text-decoration: none;
 }
 .blog-item img, .blog-item h4 a{
     transition: all .15s linear;
 }
 .blog-item:hover img{
-    transform: scale(1.05, 1.05);
+    transform: scale(1.03, 1.03);
 }
 .blog-item:hover h4 a{
     top: 3px;
-    color: crimson;
+    color: brown;
 }
