@@ -7,8 +7,8 @@
     <p>{{ article.text }}</p>
     <p>
         {% for tag in article.tags.all %}
-            <a href="{% url 'tag_search_article_list' tag_id=tag.id %}">z#{{ tag.name }}</a>
-        {% endfor %
+            <a href="{% url 'tag_search_article_list' tag_id=tag.id %}">#{{ tag.name }}</a>
+        {% endfor %}
     </p>
     <hr>
     <p>
