@@ -2,6 +2,8 @@ from django.db import models
 from django.utils.safestring import mark_safe
 from imagekit.models import ProcessedImageField, ImageSpecField
 from pilkit.processors import ResizeToFill
+
+from apps.user.models import User
 from config.settings import MEDIA_ROOT
 
 
@@ -78,6 +80,12 @@ class Article(models.Model):
     text = models.TextField(verbose_name='Текст')
     created_at = models.DateTimeField(verbose_name='Дата створення', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='Дата обнови', auto_now=True)
+    user = models.ForeignKey(
+        to=User,
+        verbose_name='Користувач',
+        on_delete=models.SET_NULL,
+        null=True
+    )
 
 
     def image_tag_thumbnail(self):
