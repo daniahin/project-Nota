@@ -3,6 +3,7 @@ from apps.blog.models import Article, BlogCategory, Tag
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlencode
+from apps.user.models import User
 
 admin.site.register(Tag)
 
@@ -29,9 +30,9 @@ class BlogCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'image_tag_thumbnail', 'category_link', 'tags_links','created_at']
-    list_display_links = ['id', 'title']
-    fields = ['category', 'image_tag', 'image', 'tags', 'title', 'text_preview', 'text']
+    list_display = ['id', 'title', 'image_tag_thumbnail', 'category_link', 'tags_links', 'created_at', 'user']
+    list_display_links = ['id', 'title', 'user']
+    fields = ['category', 'image_tag', 'image', 'tags', 'title', 'text_preview', 'text', 'user']
     readonly_fields = ['image_tag']
     list_filter = ['category', 'tags']
 
@@ -50,3 +51,10 @@ class ArticleAdmin(admin.ModelAdmin):
 
         return format_html(', '.join(tags_links))
     tags_links.short_description = 'Теги'
+
+    def user_link(self, obj):
+        if obj.user:
+            url = reverse('admin:user_user_change', args=[obj.user.id])
+            return format_html(f'<a href="{url}">{obj.user.name}</a>')
+
+    user_link.short_description = 'Користувач'
