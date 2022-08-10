@@ -17,6 +17,7 @@ class User(AbstractUser):
         format='JPEG',
         options={'quality': 100},
         null=True,
+        blank=True,
     )
     image_thumbnail = ImageSpecField(
         source='image',
