@@ -68,6 +68,7 @@ class Article(models.Model):
         format='JPEG',
         options={'quality': 100},
         null=True,
+        blank=True,
     )
     image_thumbnail = ImageSpecField(
         source='image',

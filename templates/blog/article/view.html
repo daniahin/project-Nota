@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
     <h1>{{ article.title }}</h1>
     {% if article.image %}
@@ -14,6 +15,20 @@
     <p>
         <b>Дата</b>: {{ article.created_at }} <br>
         <b>Категория</b>: {{ category.name }} <br>
-        <b>Користувач</b>: <img class="img-thumbnail" src="{{ user.image.url }}" alt="" width="70"> {{ user.first_name }} {{ user.last_name }} <br>
+        <b>Користувач</b>:  {% if user.image %}
+                                <img class="img-thumbnail" src="{{ user.image.url }}" alt="" width="75">
+                            {% else %}
+                                <img class="img-thumbnail" src="{% static 'no-user.png' %}" alt="" id="no-user" width="75">
+                            {% endif %}
+                            {% if user.first_name and user.last_name %}
+                                {{ user.first_name }} {{ user.last_name }}
+                            {% elif user.first_name %}
+                                {{ user.first_name }}
+                            {% elif user.last_name %}
+                                {{ user.last_name }}
+                            {% else %}
+                                Не зареєстрованний користувач
+                            {% endif %}
+                             <br>
     </p>
 {% endblock %}
