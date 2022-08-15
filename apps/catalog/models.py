@@ -107,7 +107,8 @@ class ProductCategory(models.Model):
         verbose_name = 'Категорія товару'
         verbose_name_plural = 'Категорії товару'
 
-class ProductImages(models.Model):
+
+class Image(models.Model):
     image = ProcessedImageField(
         verbose_name='Зображеня',
         upload_to='blog/article',
@@ -123,13 +124,13 @@ class ProductImages(models.Model):
         format='JPEG',
         options={'quality': 100},
     )
-    product = models.ForeignKey(to=Product, verbose_name='Товар', on_delete=models.CASCADE)
-    is_main = models.BooleanField(verbose_name='Основне зображення', default=False)
-
 
     def image_tag_thumbnail(self):
         if self.image:
             return mark_safe(f"<img src='/{MEDIA_ROOT}{self.image}' width='70'>")
+
+    def __str__(self):
+        return self.name
 
     image_tag_thumbnail.short_description = 'Поточне зображення'
     image_tag_thumbnail.allow_tags = True
@@ -139,6 +140,14 @@ class ProductImages(models.Model):
         if self.image:
             return mark_safe(f"<img src='/{MEDIA_ROOT}{self.image}'>")
 
+    class Meta:
+        verbose_name = 'Категорія товару'
+        verbose_name_plural = 'Категорії товару'
+
+class ProductImages(models.Model):
+    image = models.ForeignKey(to=Image, verbose_name='Зображення', on_delete=models.CASCADE)
+    product = models.ForeignKey(to=Product, verbose_name='Товар', on_delete=models.CASCADE)
+    is_main = models.BooleanField(verbose_name='Основне зображення', default=False)
 
     def __str__(self):
         return ''
