@@ -108,9 +108,6 @@ class ProductCategory(models.Model):
         verbose_name_plural = 'Категорії товару'
 
 class ProductImages(models.Model):
-    product = models.ForeignKey(to=Product, verbose_name='Товар', on_delete=models.CASCADE)
-    category = models.ForeignKey(to=Category, verbose_name='Категорія', on_delete=models.CASCADE)
-    is_main = models.BooleanField(verbose_name='Основне зображення', default=False)
     image = ProcessedImageField(
         verbose_name='Зображеня',
         upload_to='blog/article',
@@ -126,6 +123,9 @@ class ProductImages(models.Model):
         format='JPEG',
         options={'quality': 100},
     )
+    product = models.ForeignKey(to=Product, verbose_name='Товар', on_delete=models.CASCADE)
+    is_main = models.BooleanField(verbose_name='Основне зображення', default=False)
+
 
     def image_tag_thumbnail(self):
         if self.image:
