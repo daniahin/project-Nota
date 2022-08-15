@@ -36,7 +36,6 @@ class Category(MPTTModel):
     image_tag_thumbnail.allow_tags = True
 
 
-
     def image_tag(self):
         if self.image:
             return mark_safe(f"<img src='/{MEDIA_ROOT}{self.image}'>")
@@ -63,9 +62,16 @@ class Product(models.Model):
     name = models.CharField(verbose_name='Назва', max_length=255)
     description = models.TextField(verbose_name='Опис', blank=True, null=True)
     quantity = models.IntegerField(verbose_name='Кількість')
-    price = models.DecimalField(verbose_name='Цена', max_digits=12, decimal_places=2, default=0)
+    price = models.DecimalField(verbose_name='Ціна', max_digits=12, decimal_places=2, default=0)
     created_at = models.DateTimeField(verbose_name='Дата створення', auto_now_add=True)
-    updated_at = models.DateTimeField(verbose_name='Дата обнови', auto_now=True)
+    updated_at = models.DateTimeField(verbose_name='Дата оновлення', auto_now=True)
+    categories = models.ManyToManyField(
+        to=Category,
+        verbose_name='Категорії',
+        through='ProductCategory',
+        related_name='categories',
+        blank=True
+    )
 
     class Meta:
         verbose_name = 'Товар'
@@ -73,3 +79,23 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ProductCategory(models.Model):
+    product = models.ForeignKey(to=Product, verbose_name='Товар', on_delete=models.CASCADE)
+    category = models.ForeignKey(to=Category, verbose_name='Категорія', on_delete=models.CASCADE)
+    is_main = models.BooleanField(verbose_name='Основна категорія', default=False)
+
+
+    def __str__(self):
+        return ''
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        if self.is_main:
+            ProductCategory.object.filter(product=self.product).update(is_main=False)
+        super(ProductCategory, self).save(force_insert, force_update, using, update_fields)
+
+
+    class Meta:
+        verbose_name = 'Категорія товару'
+        verbose_name_plural = 'Категорії товару'
