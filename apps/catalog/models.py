@@ -1,3 +1,4 @@
+from django.contrib.admin import display
 from django.db import models
 from django.utils.safestring import mark_safe
 from imagekit.models import ProcessedImageField, ImageSpecField
@@ -58,20 +59,50 @@ class Category(MPTTModel):
     def get_absolute_url(self):
         return reverse('category', args=[self.slug])
 
+
+class Image(models.Model):
+    image = ProcessedImageField(
+        verbose_name='Изображение',
+        upload_to='catalog/product',
+        processors=[],
+        format='JPEG',
+        options={'quality': 100},
+        null=True
+    )
+    image_thumbnail = ImageSpecField(
+        source='image',
+        processors=[ResizeToFill(600, 400)],
+        format='JPEG',
+        options={'quality': 100}
+    )
+    product = models.ForeignKey(to='Product', verbose_name='Товар', on_delete=models.CASCADE)
+    is_main = models.BooleanField(verbose_name='Основне Зображення', default=False)
+
+    @display(description='Поточне зображення')
+    def image_tag_thumbnail(self):
+        if self.image:
+            if not self.image_thumbnail:
+                Image.objects.get(id=self.id)
+            return mark_safe(f"<img src='/{MEDIA_ROOT}{self.image_thumbnail}' width='70'>")
+
+    @display(description='Поточне зображення')
+    def image_tag(self):
+        if self.image:
+            if not self.image_thumbnail:
+                Image.objects.get(id=self.id)
+            return mark_safe(f"<img src='/{MEDIA_ROOT}{self.image_thumbnail}'>")
+
+    def __str__(self):
+        return ''
+
+
 class Product(models.Model):
     name = models.CharField(verbose_name='Назва', max_length=255)
     description = models.TextField(verbose_name='Опис', blank=True, null=True)
     quantity = models.IntegerField(verbose_name='Кількість')
-    price = models.DecimalField(verbose_name='Ціна', max_digits=12, decimal_places=2, default=0)
+    price = models.DecimalField(verbose_name='Ціна', max_digits=12, decimal_places=0, default=0)
     created_at = models.DateTimeField(verbose_name='Дата створення', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='Дата оновлення', auto_now=True)
-    image = models.ManyToManyField(
-        to='self',
-        verbose_name='Зображення',
-        through='ProductImages',
-        related_name='images',
-        blank=True
-    )
     categories = models.ManyToManyField(
         to=Category,
         verbose_name='Категорії',
@@ -80,12 +111,24 @@ class Product(models.Model):
         blank=True
     )
 
+    def images(self):
+        return Image.objects.filter(product=self.id)
+
+    def main_image(self):
+        image = Image.objects.filter(is_main=True, product=self.id).first()
+        if image:
+            return image
+        return self.images().first()
+
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товари'
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('product', kwargs={'pk': self.id})
 
 
 class ProductCategory(models.Model):
@@ -106,48 +149,3 @@ class ProductCategory(models.Model):
     class Meta:
         verbose_name = 'Категорія товару'
         verbose_name_plural = 'Категорії товару'
-
-class ProductImages(models.Model):
-    image = ProcessedImageField(
-        verbose_name='Зображеня',
-        upload_to='blog/article',
-        processors=[],
-        format='JPEG',
-        options={'quality': 100},
-        null=True,
-        blank=True,
-    )
-    image_thumbnail = ImageSpecField(
-        source='image',
-        processors=[ResizeToFill(600, 400)],
-        format='JPEG',
-        options={'quality': 100},
-    )
-    product = models.ForeignKey(to=Product, verbose_name='Товар', on_delete=models.CASCADE)
-    is_main = models.BooleanField(verbose_name='Основне зображення', default=False)
-
-
-    def image_tag_thumbnail(self):
-        if self.image:
-            return mark_safe(f"<img src='/{MEDIA_ROOT}{self.image}' width='70'>")
-
-    image_tag_thumbnail.short_description = 'Поточне зображення'
-    image_tag_thumbnail.allow_tags = True
-
-
-    def image_tag(self):
-        if self.image:
-            return mark_safe(f"<img src='/{MEDIA_ROOT}{self.image}'>")
-
-
-    def __str__(self):
-        return ''
-
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        if self.is_main:
-            ProductImages.objects.filter(product=self.product).update(is_main=False)
-        super(ProductImages, self).save(force_insert, force_update, using, update_fields)
-
-    class Meta:
-        verbose_name = 'Зображення товару'
-        verbose_name_plural = 'Зображення товару'
