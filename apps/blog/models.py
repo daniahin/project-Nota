@@ -102,7 +102,9 @@ class Article(models.Model):
 
     def image_tag(self):
         if self.image:
-            return mark_safe(f"<img src='/{MEDIA_ROOT}{self.image}'>")
+            if not self.image_thumbnail:
+                Article.objects.get(id=self.id)
+            return mark_safe(f"<img src='/{MEDIA_ROOT}{self.image_thumbnail}'>")
 
     image_tag.short_description = 'Поточне зображення'
     image_tag.allow_tags = True
