@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'phonenumber_field',
     'mptt',
+    'apps.main',
     'apps.blog',
     'apps.user',
-    'apps.catalog'
+    'apps.catalog',
 ]
 
 MIDDLEWARE = [
