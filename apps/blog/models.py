@@ -3,6 +3,7 @@ from django.utils.safestring import mark_safe
 from imagekit.models import ProcessedImageField, ImageSpecField
 from pilkit.processors import ResizeToFill
 
+from apps.main.mixins import MetaTagMixin
 from apps.user.models import User
 from config.settings import MEDIA_ROOT
 
@@ -53,7 +54,7 @@ class Tag(models.Model):
         verbose_name = 'Тэг'
         verbose_name_plural = 'Тэги'
 
-class Article(models.Model):
+class Article(MetaTagMixin, models.Model):
     category = models.ForeignKey(
         to=BlogCategory,
         verbose_name='Категорія',

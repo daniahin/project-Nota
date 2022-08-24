@@ -4,9 +4,7 @@
 <head>
     <meta charset="UTF-8">
     {% block meta_tags %}
-        <title>Nota_store</title>
-        <meta name="description" content="">
-        <meta name="keywords" content="">
+        {% include '_meta_tags.html' with meta_title='Головна' %}
     {% endblock %}
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -17,13 +15,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
             crossorigin="anonymous"></script>
-      <script
+    <script
 
-      src="https://code.jquery.com/jquery-3.6.0.min.js"
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
 
-      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 
-      crossorigin="anonymous"></script>
+            crossorigin="anonymous"></script>
     <script src="{% static 'lightbox/js/lightbox.min.js' %}"></script>
 </head>
 <body>

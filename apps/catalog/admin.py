@@ -5,8 +5,8 @@ from apps.catalog.models import Category, Product, Image
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ['name']}
-    readonly_fields = ['name', 'slug', 'parent', 'description', 'image_tag', 'image',
-                       'meta_title', 'meta_description', 'meta_keywords']
+    fields = ['name', 'slug', 'parent', 'description', 'image', 'meta_title', 'meta_description', 'meta_keywords']
+    readonly_fields = ['image_tag']
 
 
 class ProductCategoryInline(admin.TabularInline):
