@@ -122,6 +122,12 @@ class Product(MetaTagMixin):
             return image
         return self.images().first()
 
+    def main_category(self):
+        category = self.categories.filter(categories__productcategory__is_main=True)
+        if category:
+            return category
+        return self.categories.first()
+
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товари'
