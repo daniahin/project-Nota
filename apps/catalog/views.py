@@ -11,6 +11,9 @@ class CatalogIndexView(ListViewBreadcrumbsMixin):
     def get_queryset(self):
         return Category.objects.filter(parent=None)
 
+    def set_breadcrumbs(self):
+        breadcrumbs = {reverse('catalog'): PAGE_NAMES['catalog']}
+        return breadcrumbs
 
 class ProductByCategoryView(ListViewBreadcrumbsMixin):
     template_name = 'catalog/category.html'
