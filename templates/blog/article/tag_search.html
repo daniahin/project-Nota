@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
-    {% block meta_tags %}
+{% block meta_tags %}
     <title>Тег #{{ tag.name }} | Nota-store</title>
-    {% endblock %}
+{% endblock %}
+{% block breadcrumbs %}
+    {% include '_breadcrumbs.html' %}
+{% endblock %}
 {% block content %}
     <h1>Статті, що мають тег #{{ tag.name }}</h1>
     {% for article in articles %}
