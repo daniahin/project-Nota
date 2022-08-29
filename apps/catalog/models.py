@@ -123,7 +123,7 @@ class Product(MetaTagMixin):
         return self.images().first()
 
     def main_category(self):
-        category = self.categories.filter(categories__productcategory__is_main=True)
+        category = self.categories.filter(productcategory__is_main=True).first()
         if category:
             return category
         return self.categories.first()
@@ -150,7 +150,7 @@ class ProductCategory(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if self.is_main:
-            ProductCategory.object.filter(product=self.product).update(is_main=False)
+            ProductCategory.objects.filter(product=self.product).update(is_main=False)
         super(ProductCategory, self).save(force_insert, force_update, using, update_fields)
 
 
