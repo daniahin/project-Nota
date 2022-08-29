@@ -41,6 +41,11 @@
                 У них стільки світла і добра! <br>
                 Як самий таємний друг <br>
                 Її неповний, ніжний звук.</p>
+            {% if request.user.is_authenticated %}
+                <p class="text-end">Привіт, {{ request.user.username }}! (<a href="{% url 'logout' %}">Вийти)</a></p>
+            {% else %}
+                <p class="text-end"><a href="{% url 'login' %}?next={{ request.path }}">Ввійти</a></p>
+            {% endif %}
         </div>
     </div>
 </div>
