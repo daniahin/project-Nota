@@ -29,11 +29,11 @@
         <img class="img-thumbnail" src="{% static 'no-user.png' %}" alt="" id="no-user" width="75">
     {% endif %}
         {% if user.first_name and user.last_name %}
-            {{ user.first_name }} {{ user.last_name }}
+            {{ article.user.first_name }} {{ user.last_name }}
         {% elif user.first_name %}
-            {{ user.first_name }}
+            {{ article.user.first_name }}
         {% elif user.last_name %}
-            {{ user.last_name }}
+            {{ article.user.last_name }}
         {% else %}
             Не зареєстрованний користувач
         {% endif %}
