@@ -42,7 +42,7 @@ def user_register(request):
             user.save()
             login(request, user)
             return HttpResponseRedirect(next_page)
-            error = form.errors
+        error = form.errors
     else:
         form = RegisterForm()
     return render(request, 'user/register.html', {'form': form, 'error': error})
