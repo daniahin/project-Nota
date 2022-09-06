@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block meta_tags %}
+    {% include '_meta_tags.html' with meta_title='Кошик' %}
+{% endblock %}
+{% block content %}
+    <h3 class="my-header">Ваш кошик:</h3>
+    {% include 'order/_cart.html' %}
+{% endblock %}
