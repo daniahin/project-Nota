@@ -37,11 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'phonenumber_field',
     'mptt',
+    'mathfilters',
+
+    'apps.main',
     'apps.blog',
     'apps.user',
-    'apps.catalog'
+    'apps.catalog',
+    'apps.order',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +142,8 @@ MEDIA_ROOT = 'media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'user.User'
+PAGE_NAMES = {
+    'home': 'Головна',
+    'blog': 'Блог',
+    'catalog': 'Каталог',
+}

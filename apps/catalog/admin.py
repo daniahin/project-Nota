@@ -1,10 +1,12 @@
 from django.contrib import admin
-from apps.catalog.models import Category, Product
+from apps.catalog.models import Category, Product, Image
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ['name']}
+    fields = ['name', 'slug', 'parent', 'description', 'image', 'meta_title', 'meta_description', 'meta_keywords']
+    readonly_fields = ['image_tag']
 
 
 class ProductCategoryInline(admin.TabularInline):
@@ -12,15 +14,17 @@ class ProductCategoryInline(admin.TabularInline):
     extra = 1
 
 
-class ProductImagesInline(admin.TabularInline):
-    model = Product.image.through
+class ImageInLine(admin.TabularInline):
+    model = Image
+    fields = ['product', 'image_tag', 'image', 'is_main']
+    readonly_fields = ['image_tag']
     extra = 1
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    fields = ['name', 'description', 'quantity', 'price']
-    inlines = [ProductCategoryInline, ProductImagesInline]
+    fields = ['name', 'description', 'quantity', 'price', 'meta_title', 'meta_description', 'meta_keywords']
+    inlines = [ProductCategoryInline, ImageInLine]
 
 
 
