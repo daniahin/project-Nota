@@ -81,7 +81,7 @@
                         {% if request.user.is_authenticated %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'cart_view' %}">
-                                    312
+                                    <img class="img" src="{% static 'cart-svgrepo-com.svg' %}" alt="" width="30">
                                 </a>
                             </li>
                         {% endif %}
