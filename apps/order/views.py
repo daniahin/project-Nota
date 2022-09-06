@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from apps.order.forms import AddToCartForm
@@ -28,3 +30,8 @@ def add_to_cart(request):
         return render(request, 'order/added.html', {'product': cd['product'], 'cart': get_cart_data(cd['user'])})
     print(form.errors)
 
+
+@login_required
+def cart_view(request):
+    cart = get_cart_data(request.user)
+    return render(request, 'order/view.html', {'cart': cart})
