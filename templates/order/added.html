@@ -5,3 +5,8 @@
     <p>Товар <a href="{% url 'product' pk=product.id %}">{{ product.name }}</a> доданий у корзину</p>
     {% include 'order/_cart.html' %}
 {% endblock %}
+{% if cart.total %}
+    <p class="text-center">
+        <a href="{% url 'create_order' %}" class="btn btn-accept">Оформити замовлення</a>
+    </p>
+{% endif %}

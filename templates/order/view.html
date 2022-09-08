@@ -6,3 +6,8 @@
     <h3 class="my-header">Ваш кошик:</h3>
     {% include 'order/_cart.html' %}
 {% endblock %}
+{% if cart.total %}
+    <p class="text-center">
+        <a href="{% url 'create_order' %}" class="btn btn-accept">Оформити замовлення</a>
+    </p>
+{% endif %}
