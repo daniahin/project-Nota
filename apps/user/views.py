@@ -18,18 +18,18 @@ def user_login(request):
                     login(request, user)
                     return HttpResponseRedirect(next_page)
                 else:
-                    error = 'Вас заблоковано. йдіть лісом'
+                    error = 'Вас заблоковано.'
             else:
-                error = 'Неправильні логін, або пароль'
+                error = 'Неправильні логін, або пароль.'
     else:
         form = LoginForm()
-    form = LoginForm()
     return render(request, 'user/login.html', {'form': form, 'error': error})
 
 
 def user_logout(request):
     logout(request)
     return redirect('home')
+
 
 def user_register(request):
     error = None
@@ -40,8 +40,7 @@ def user_register(request):
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
             user.save()
-            login(request, user)
-            return HttpResponseRedirect(next_page)
+            return render(request, 'user/welcome.html', {'user': user, 'next_page': next_page})
         error = form.errors
     else:
         form = RegisterForm()
