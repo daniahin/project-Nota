@@ -16,6 +16,7 @@ def get_cart_data(user):
 
 @login_required
 def add_to_cart(request):
+    breadcrumbs = {'current': 'Додавання товару у кошик'}
     data = request.GET.copy()
     data.update(user=request.user)
     request.GET = data
@@ -30,18 +31,20 @@ def add_to_cart(request):
             else:
                 form.save()
             request.session['cart_token'] = data.get('csrfmiddlewaretoken')
-        return render(request, 'order/added.html', {'product': cd['product'], 'cart': get_cart_data(cd['user'])})
+        return render(request, 'order/added.html', { 'breadcrumbs': breadcrumbs, 'product': cd['product'], 'cart': get_cart_data(cd['user'])})
     print(form.errors)
 
 
 @login_required
 def cart_view(request):
     cart = get_cart_data(request.user)
-    return render(request, 'order/view.html', {'cart': cart})
+    breadcrumbs = {'current': 'Кошик'}
+    return render(request, 'order/view.html', {'cart': cart, 'breadcrumbs': breadcrumbs})
 
 
 @login_required
 def create_order(request):
+    breadcrumbs = {'current': 'Створення замовлення'}
     error = None
     user = request.user
     cart = get_cart_data(user)
@@ -65,4 +68,4 @@ def create_order(request):
             'email': user.email if user.email else '',
             'phone': user.phone if user.phone else '',
         })
-    return render(request, 'order/create.html', {'cart': cart, 'form': form, 'error': error})
+    return render(request, 'order/create.html', {'cart': cart, 'form': form, 'error': error, 'breadcrumbs': breadcrumbs})

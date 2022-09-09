@@ -7,6 +7,7 @@ from django.urls import reverse
 
 def user_login(request):
     error = None
+    breadcrumbs = {'current': 'Логін'}
     next_page = request.GET.get('next', reverse('home'))
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -18,12 +19,12 @@ def user_login(request):
                     login(request, user)
                     return HttpResponseRedirect(next_page)
                 else:
-                    error = 'Вас заблоковано.'
+                    error = 'Вы забанены, идите лесом -->'
             else:
-                error = 'Неправильні логін, або пароль.'
+                error = 'Неправильные логин или пароль'
     else:
         form = LoginForm()
-    return render(request, 'user/login.html', {'form': form, 'error': error})
+    return render(request, 'user/login.html', {'form': form, 'error': error, 'breadcrumbs': breadcrumbs})
 
 
 def user_logout(request):
@@ -33,6 +34,7 @@ def user_logout(request):
 
 def user_register(request):
     error = None
+    breadcrumbs = {'current': 'Реєстрація'}
     next_page = request.GET.get('next', reverse('home'))
     if request.method == 'POST':
         form = RegisterForm(request.POST, request.FILES)
@@ -44,4 +46,4 @@ def user_register(request):
         error = form.errors
     else:
         form = RegisterForm()
-    return render(request, 'user/register.html', {'form': form, 'error': error})
+    return render(request, 'user/register.html', {'form': form, 'error': error, 'breadcrumbs': breadcrumbs})

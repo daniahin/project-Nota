@@ -1,12 +1,20 @@
 {% extends "base.html" %}
 
+{% block meta_tags %}
+    {% include '_meta_tags.html' with meta_title='Кошик' %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {% include '_breadcrumbs.html' %}
+{% endblock %}
+
 {% block content %}
     <h3 class="my-header">Додано!</h3>
-    <p>Товар <a href="{% url 'product' pk=product.id %}">{{ product.name }}</a> доданий у корзину</p>
+    <p>Товар <a href="{% url 'product' pk=product.id %}">{{ product.name }}</a> доданий у кошик</p>
     {% include 'order/_cart.html' %}
+    {% if cart.total %}
+        <p class="text-center">
+            <a href="{% url 'create_order' %}" class="btn btn-info">Оформити замовлення</a>
+        </p>
+    {% endif %}
 {% endblock %}
-{% if cart.total %}
-    <p class="text-center">
-        <a href="{% url 'create_order' %}" class="btn btn-accept">Оформити замовлення</a>
-    </p>
-{% endif %}
