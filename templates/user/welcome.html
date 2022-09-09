@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Welcome{% endblock %}
+{% block title %}Вітаємо!{% endblock %}
+
+{% block breadcrumbs %}
+    {% include '_breadcrumbs.html' %}
+{% endblock %}
 
 {% block content %}
     <h1>Привет {{ user.username }}!</h1>
-    <p>Твой аккуант создан. Теперь ты можешь <a href="{% url "login" %}?next={{ next_page }}">войти</a>.</p>
+    <p>Твій аккаунт створений. Тепер ти можеш <a href="{% url "login" %}?next={{ next_page }}">ввійти</a>.</p>
 {% endblock %}

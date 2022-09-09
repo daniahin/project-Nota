@@ -28,7 +28,7 @@
 <div class="page-header">
     <div class="container">
         <div class="row">
-            <div class="col-6"
+            <div class="col-6">
             <br>
             <a href="{% url 'home' %}">
                 <img src="{% static 'guitar-logo.png' %}" alt="Nota" title="Nota" id="logo">
@@ -44,15 +44,7 @@
             {% if request.user.is_authenticated %}
                 <p class="text-end">Привіт, {{ request.user.username }}! (<a href="{% url 'logout' %}">Вийти)</a></p>
             {% else %}
-                <p class="text-end"><a href="{% url 'login' %}?next=
-
-
-
-
-
-
-                        {% if request.GET.next %}{{ request.GET.next }}{% else %}{{ request.path }}{% endif %}">Ввійти</a>,
-                    або <a href="{% url 'register' %}?next={{ request.path }}">Зареєструватися</a></p>
+                <p class="text-end"><a href="{% url 'login' %}?next={% if request.GET.next %}{{ request.GET.next }}{% else %}{{ request.path }}{% endif %}">Ввійти</a>, або <a href="{% url 'register' %}?next={{ request.path }}">Зареєструватися</a></p>
             {% endif %}
         </div>
     </div>
@@ -118,7 +110,7 @@
                 <hr>
             </div>
             <div class="col">
-                <p class="text-center text-info">Все права защищены, правда неизвестно кем)</p>
+                <p class="text-center text-info">Всі права захищені, правда невідомо ким)</p>
             </div>
         </div>
     </div>
