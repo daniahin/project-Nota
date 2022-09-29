@@ -1,20 +1,42 @@
 from rest_framework import serializers
-from apps.blog.models import Article, Tag, BlogCategory
+
+from apps.blog.models import Article, Tag
 
 
-class ArticleSerializer(serializers.ModelSerializer):
-    slug = serializers.CharField(write_only=True)
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('id', 'name')
+
+
+class ArticleReadSerializer(serializers.ModelSerializer):
+    tags = TagSerializer(many=True)
 
     class Meta:
         model = Article
         fields = (
             'id',
-            'name',
-            'slug',
-            'description',
-            'parent',
+            'category',
+            'user',
             'image',
-            'meta_title',
-            'meta_description',
-            'meta_keywords',
+            'title',
+            'text_preview',
+            'text',
+            'tags',
+        )
+
+
+class ArticleWriteSerializer(serializers.ModelSerializer):
+    tags = serializers.ListField(child=serializers.CharField(max_length=64), write_only=True)
+
+    class Meta:
+        model = Article
+        fields = (
+            'id',
+            'category',
+            'image',
+            'title',
+            'text_preview',
+            'text',
+            'tags',
         )
