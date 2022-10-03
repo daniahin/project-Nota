@@ -1,12 +1,8 @@
-from django.urls import path
-from apps.api.catalog.views import ProductListView, ProductDetailView, ProductCreateView, ProductUpdateView, \
-    ProductDeleteView, ImageViewSet, CategoryViewSet
 from rest_framework.routers import DefaultRouter
 
+from apps.api.blog.views import ArticleViewSet
 
-urlpatterns = [
-
-]
+urlpatterns = []
 
 router = DefaultRouter()
 router.register('article', ArticleViewSet, basename='article')

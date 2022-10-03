@@ -13,7 +13,7 @@
     {% if article.image %}
         <img class="img-thumbnail" src="{{ article.image.url }}" alt="">
     {% endif %}
-    <p>{{ article.text }}</p>
+    <p>{{ article.text|safe }}</p>
     <p>
         {% for tag in article.tags.all %}
             <a href="{% url 'tag_search_article_list' tag_id=tag.id %}">#{{ tag.name }}</a>
@@ -22,11 +22,11 @@
     <hr>
     <p>
         <b>Дата</b>: {{ article.created_at }} <br>
-        <b>Категория</b>: {{ category.name }} <br>
+        <b>Категорія</b>: {{ category.name }} <br>
         <b>Користувач</b>:  {% if user.image %}
-        <img class="img-thumbnail" src="{{ user.image.url }}" alt="" width="75">
+        <img class="img-thumbnail, avatar" src="{{ user.image.url }}" alt="" width="75">
     {% else %}
-        <img class="img-thumbnail" src="{% static 'no-user.png' %}" alt="" id="no-user" width="75">
+        <img class="img-thumbnail avatar" src="{% static 'no-user.png' %}" alt="" id="no-user" width="75">
     {% endif %}
         {% if user.first_name and user.last_name %}
             {{ article.user.first_name }} {{ user.last_name }}
