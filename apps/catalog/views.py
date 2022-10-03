@@ -15,6 +15,7 @@ class CatalogIndexView(ListViewBreadcrumbsMixin):
         breadcrumbs = {reverse('catalog'): PAGE_NAMES['catalog']}
         return breadcrumbs
 
+
 class ProductByCategoryView(ListViewBreadcrumbsMixin):
     template_name = 'catalog/category.html'
     category = None

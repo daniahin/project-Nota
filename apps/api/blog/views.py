@@ -37,7 +37,6 @@ class ArticleViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data)
         serializer.is_valid(raise_exception=True)
-
         tags = serializer.validated_data.get('tags')
         article = serializer.save(user=self.request.user, tags=self.check_tags(tags))
         read_serializer = self.serializer_class(article, context={'request': request})

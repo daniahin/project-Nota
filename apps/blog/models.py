@@ -6,6 +6,7 @@ from pilkit.processors import ResizeToFill
 from apps.main.mixins import MetaTagMixin
 from apps.user.models import User
 from config.settings import MEDIA_ROOT
+from tinymce.models import HTMLField
 
 
 class BlogCategory(models.Model):
@@ -78,8 +79,8 @@ class Article(MetaTagMixin, models.Model):
         options={'quality': 100},
     )
     title = models.CharField(verbose_name='Заголовок', max_length=255)
-    text_preview = models.TextField(verbose_name='Текст-превью')
-    text = models.TextField(verbose_name='Текст')
+    text_preview = models.TextField(verbose_name="Текст-прев`ю")
+    text = HTMLField(verbose_name='Текст')
     created_at = models.DateTimeField(verbose_name='Дата створення', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='Дата обнови', auto_now=True)
     user = models.ForeignKey(
@@ -89,7 +90,6 @@ class Article(MetaTagMixin, models.Model):
         null=True
     )
 
-
     def image_tag_thumbnail(self):
         if self.image:
             if not self.image_thumbnail:
@@ -98,8 +98,6 @@ class Article(MetaTagMixin, models.Model):
 
     image_tag_thumbnail.short_description = 'Поточне зображення'
     image_tag_thumbnail.allow_tags = True
-
-
 
     def image_tag(self):
         if self.image:
