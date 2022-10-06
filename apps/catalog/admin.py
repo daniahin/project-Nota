@@ -28,3 +28,4 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'user', 'quantity', 'price', 'is_checked']
     list_display_links = ['id', 'name']
     inlines = [ProductCategoryInline, ImageInLine]
+
