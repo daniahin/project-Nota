@@ -108,11 +108,26 @@ class Article(MetaTagMixin, models.Model):
     image_tag.short_description = 'Поточне зображення'
     image_tag.allow_tags = True
 
-
-
     def __str__(self):
         return self.title
 
     class Meta:
         verbose_name = 'Стаття'
         verbose_name_plural = 'Статті'
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(to=User, verbose_name='Пользователь', on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(verbose_name='Имя', max_length=128, null=True, blank=True)
+    email = models.EmailField(verbose_name='E-mail')
+    article = models.ForeignKey(to=Article, verbose_name='Стаття', on_delete=models.CASCADE, null=True)
+    text = models.TextField(verbose_name='Текст')
+    is_checked = models.BooleanField(verbose_name='Перевіренний', default=False)
+    created_at = models.DateTimeField(verbose_name='Дата створення', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Коментар'
+        verbose_name_plural = 'Коментарі'
+
+    def __str__(self):
+        return self.name

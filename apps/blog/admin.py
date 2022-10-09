@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.blog.models import Article, BlogCategory, Tag
+from apps.blog.models import Article, BlogCategory, Tag, Comment
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlencode
@@ -58,3 +58,9 @@ class ArticleAdmin(admin.ModelAdmin):
             return format_html(f'<a href="{url}">{obj.user.name}</a>')
 
     user_link.short_description = 'Користувач'
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'name', 'article', 'is_checked']
+    list_display_links = ['id', 'user', 'name']
