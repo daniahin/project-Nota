@@ -1,8 +1,11 @@
+from django.contrib.admin import display
 from django.db import models
+from django.utils.safestring import mark_safe
 from tinymce.models import HTMLField
 
 from apps.catalog.models import Product
 from apps.main.mixins import MetaTagMixin
+from config.settings import MEDIA_ROOT
 
 
 class Page(MetaTagMixin):
@@ -33,3 +36,22 @@ class ProductSet(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class GlobalSetting(MetaTagMixin):
+    main_text = HTMLField(verbose_name='Текст на головній')
+    footer_text = models.CharField(verbose_name='Текст у футері', max_length=255)
+    logo = models.ImageField(verbose_name='Зображення', upload_to='main', null=True)
+
+    @display(description='Текущий логотип')
+    def image_tag_thumbnail(self):
+        if self.logo:
+            return mark_safe(f"<img src='/{MEDIA_ROOT}{self.logo}' width='70'>")
+
+    class Meta:
+        verbose_name = 'Налаштування'
+        verbose_name_plural = 'Налаштування'
+
+    def __str__(self):
+        return 'Налаштування'
+

@@ -1,0 +1,14 @@
+[
+  {
+    "model": "main.globalsetting",
+    "pk": 1,
+    "fields": {
+      "meta_title": "Головна сторінка",
+      "meta_description": "Головна сторінка",
+      "meta_keywords": "Головна сторінка",
+      "footer_text": "Всі права захищені, правда невідомо ким)",
+      "main_text": "Якийсь текст на головній сторінці"
+    }
+  }
+]
+
